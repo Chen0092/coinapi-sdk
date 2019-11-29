@@ -30,14 +30,13 @@ api = CoinAPIv1(test_key)
 '''
 assets = ['BTC','ETH','XRP','LTC']
 '''
-assets = ['ETH','XRP','LTC']
+assets = ['XRP','LTC']
 period_id = '1HRS'
 '''
 start_dates = [datetime.date(2010, 7, 17).isoformat(),datetime.date(2015, 8, 7).isoformat(),
                datetime.date(2013, 11, 25).isoformat(),datetime.date(2013, 5, 19).isoformat()]
 '''
-start_dates = [datetime.date(2015, 8, 7).isoformat(),
-               datetime.date(2013, 11, 25).isoformat(),datetime.date(2013, 5, 19).isoformat()]
+start_dates = [datetime.date(2013, 11, 25).isoformat(),datetime.date(2013, 5, 19).isoformat()]
 lim = '100000' 
 
 for i, asset_id in enumerate(assets):
