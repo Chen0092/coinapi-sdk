@@ -10,13 +10,14 @@ class DataCollector:
 		self.lim = lim
 
 	def perform(self):
-		csv_path = './dataset/'+asset_id+'_'+period_id+'_'+start_date+'.csv'
+		csv_path = './dataset/'+self.asset_id+'_'+self.period_id+'_'+self.start_date+'.csv'
 		f = open(csv_path,'w',encoding='utf-8',newline='')
 		csv_writer = csv.writer(f)
 		csv_writer.writerow(['Period Start','Period end','Time open','Time close','Price open',
 							 'Price close','Price low','Price high','Volume traded','Trades count'])
 
-		ohlcv_historical = api.ohlcv_historical_data('BITSTAMP_SPOT_'+asset_id+'_USD', {'period_id': period_id, 'time_start': start_date, 'limit': lim})
+		ohlcv_historical = self.api.ohlcv_historical_data('BITSTAMP_SPOT_'+self.asset_id+'_USD', {'period_id': self.period_id, 
+                                                                                            'time_start': self.start_date, 'limit': self.lim})
 
 		for period in ohlcv_historical:
 			csv_writer.writerow([period['time_period_start'], period['time_period_end'],period['time_open'],
@@ -26,11 +27,19 @@ class DataCollector:
 test_key = sys.argv[1]
 
 api = CoinAPIv1(test_key)
+'''
 assets = ['BTC','ETH','XRP','LTC']
+'''
+assets = ['ETH','XRP','LTC']
 period_id = '1HRS'
-start_date = datetime.date(2019, 8, 7).isoformat()
-lim = '10000'
+'''
+start_dates = [datetime.date(2010, 7, 17).isoformat(),datetime.date(2015, 8, 7).isoformat(),
+               datetime.date(2013, 11, 25).isoformat(),datetime.date(2013, 5, 19).isoformat()]
+'''
+start_dates = [datetime.date(2015, 8, 7).isoformat(),
+               datetime.date(2013, 11, 25).isoformat(),datetime.date(2013, 5, 19).isoformat()]
+lim = '100000' 
 
-for asset_id in assets:
-	dc = DataCollector(api, asset_id, period_id, start_date, lim)
+for i, asset_id in enumerate(assets):
+	dc = DataCollector(api, asset_id, period_id, start_dates[i], lim)
 	dc.perform()
